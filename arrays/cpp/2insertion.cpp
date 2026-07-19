@@ -1,60 +1,45 @@
 #include <iostream>
 using namespace std;
 
-void insert(int arr[], int &numOfEelements, int capacity, int position, int item)
-{
-    // Check overflow
-    if (numOfEelements == capacity)
-    {
-        cout << "Overflow!\n";
-        return;
+/*
+We intend to insert an element in an array. 
+say the array is: {[0] 462, [1] 5356, [2] 345}
+number of elements: 3
+say you intend to insert it at position [1].
+To do this you will need to shift the elements to the right. 
+The issue is, if you move right, the next element is deleted.
+To prevent this, we start at the postion after the last element, and work our way backwards.
+We run the loop until we reach the position we want to insert the elememt. 
+then, we insert the element, increase the number of elements, and done!
+*/
+void insert(int arr[], int &numOfElements, int pos, int item){
+    for(int k = numOfElements; k > pos; k--){
+        arr[k] = arr[k-1]; 
     }
 
-    // Check position validity
-    if (position < 0 || position > numOfEelements)
-    {
-        cout << "Invalid position!\n";
-        return;
-    }
-
-    // Shift elements to the right
-    for (int k = numOfEelements; k > position; k--)
-    {
-        arr[k] = arr[k - 1];
-    }
-
-    // Insert item
-    arr[position] = item;
-
-    numOfEelements++;
+    numOfElements++;
 }
+
 
 int main()
 {
-    int arr[10] = {1, 2, 3, 4};
-    int numOfEelements = 4;   // Number of elements currently present
-    int capacity = 10;
-    int position;
-    int item = 7;
-
-    cout << "Enter position to insert: ";
-    cin >> position;
-
-    cout << "Before insertion:\n";
-    for (int k = 0; k < numOfEelements; k++)
-    {
-        cout << arr[k] << "\t";
+    int arr[10] = {462, 5356, 345};
+    int numOfElements = 3;
+    int pos = 1; 
+    int item = 78; 
+    
+    for (int k=0; k<=numOfElements-1; k++ ){
+        cout << arr[k] << '\t'; 
     }
 
-    insert(arr, numOfEelements, capacity, position, item);
+    cout << '\n';
 
-    cout << "\nAfter insertion:\n";
-    for (int k = 0; k < numOfEelements; k++)
-    {
-        cout << arr[k] << "\t";
+    insert(arr, numOfElements,pos, item);
+
+    for (int k=0; k<=numOfElements-1; k++ ){
+        cout << arr[k] << '\t'; 
     }
-
-    cout << endl;
+    cout << endl; 
 
     return 0;
 }
