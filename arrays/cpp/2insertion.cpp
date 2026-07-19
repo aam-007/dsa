@@ -1,60 +1,60 @@
-// insert element 
-
 #include <iostream>
 using namespace std;
 
-void insert(int arr[], int &n, int cap, int pos, int item){
-    // check overflow
-
-    if (n>cap){
-        cout << "overflow";
-    }
-
-    // check valid pos
-
-    if (pos < 0 || pos > n)
+void insert(int arr[], int &numOfEelements, int capacity, int position, int item)
+{
+    // Check overflow
+    if (numOfEelements == capacity)
     {
-        cout << "invaid pos"; 
+        cout << "Overflow!\n";
+        return;
     }
 
-    // shiftig elements 
-
-    for (int k =n; k > pos; k--){
-        arr[k] = arr[k-1];
-
-
+    // Check position validity
+    if (position < 0 || position > numOfEelements)
+    {
+        cout << "Invalid position!\n";
+        return;
     }
 
-    //insert element
-    arr[pos] = item; cout << "\n";
+    // Shift elements to the right
+    for (int k = numOfEelements; k > position; k--)
+    {
+        arr[k] = arr[k - 1];
+    }
 
-    //inc size of array
+    // Insert item
+    arr[position] = item;
 
-    n++; 
+    numOfEelements++;
 }
 
 int main()
 {
     int arr[10] = {1, 2, 3, 4};
-    int n = sizeof(arr)/sizeof(arr[0]);
-    int cap = 10;
-    int pos = 2; 
-    int item; 
-    cout << "Enter element to insert: "; cin >> item; 
+    int numOfEelements = 4;   // Number of elements currently present
+    int capacity = 10;
+    int position;
+    int item = 7;
 
-    cout << "Elements before insertion: " << '\n';
+    cout << "Enter position to insert: ";
+    cin >> position;
 
-    for (int i =0; i <= n-1; i++){
-        cout << arr[i] << '\t';
+    cout << "Before insertion:\n";
+    for (int k = 0; k < numOfEelements; k++)
+    {
+        cout << arr[k] << "\t";
     }
 
-    insert(arr, n, cap, pos, item);
-    cout << "After insertion: " << '\n';
+    insert(arr, numOfEelements, capacity, position, item);
 
-    
-    for (int i =0; i <= n-1; i++){
-        cout << arr[i] << '\t';
+    cout << "\nAfter insertion:\n";
+    for (int k = 0; k < numOfEelements; k++)
+    {
+        cout << arr[k] << "\t";
     }
-    
 
+    cout << endl;
+
+    return 0;
 }
