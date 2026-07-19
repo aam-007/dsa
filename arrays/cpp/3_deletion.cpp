@@ -18,7 +18,7 @@ We must also dec the num of elements.
 */
 void del(int arr[], int &numOfElements, int pos){
     for(int i = pos; i < numOfElements; i++){
-        arr[i-1] = arr[i]; 
+        arr[i] = arr[i+1]; 
     }
 
     numOfElements--;
