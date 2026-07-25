@@ -1,163 +1,190 @@
 /*
-array ops: display, insert, delete, bubble sort, linear search, binary search
+Array Operations
+- Display
+- Insert
+- Delete
+- Bubble Sort
+- Linear Search
+- Binary Search
+
+Author: aditya.mishra10@nmims.in
 */
 
 #include <iostream>
-using namespace std; 
+using namespace std;
 
-// functions used: 
-void disp(int arr[],  int numOfElements); // ---------------- done 
-void insert(int arr[],  int &numOfElements, int pos1, int item);  // ---------------- done 
-void del(int arr[],  int &numOfElements, int pos2);//   ------- done 
-void bubbleSort(int arr[],  int numOfElements); // ----- done 
-bool linearSearch(int arr[],  int numOfElements, int key1);//  ---- done 
-bool binarySearch(int arr[],  int numOfElements, int key2);//  ---- done 
-bool isSorted(int arr[], int numOfElements); // --- done   
+// Function Prototypes
+void disp(int arr[], int numOfElements);
+void insert(int arr[], int &numOfElements, int pos, int item);
+void del(int arr[], int &numOfElements, int pos);
+void buSort(int arr[], int numOfElements);
+int LSearch(int arr[], int numOfElements, int key);
+int biSearch(int arr[], int numOfElements, int key);
+bool isSorted(int arr[], int numOfElements);
 
-int main(){
-    int arr[12] = {6, 9, 2, 0, 8, 46, 87, 100, 900, 122};
-    int numOfElements = sizeof(arr)/sizeof(arr[0]); 
-    int pos1 = 2; //insertion
-    int pos2 = 0; // deletion
-    int key1 = 67; //linear search
-    int key2 = 0; // binary search
-    int item = 90; //insertion 
+int main()
+{
+    cout << "Full Array Operations\n\n";
 
-    //disp array
-    cout << "array is: " << '\n';
-    disp(arr, numOfElements); cout << '\n'; 
+    // Initial array
+    int arr[12] = {2, 0, 45, 96, 34, 90, 46, 23, 89, 45};
+    int numOfElements = 10;
 
-    cout << endl; 
+    int item = 67;
+    int insertPos = 4;
+    int deletePos = 7;
 
-    // insert element
-    cout << "after inserting "<< item << " in array " << '\n';
-    insert(arr, numOfElements, pos1, item);
-    disp(arr, numOfElements); cout << '\n'; 
+    int linearKey = 69;
+    int binaryKey = 45;
 
-    cout << endl; 
+    // Display array
+    cout << "Original Array:\n";
+    disp(arr, numOfElements);
+    cout << "\n\n";
 
-    //delete element 
-    cout << "after deleting item at position: "<< pos2 << " in array " << '\n';
-    del(arr, numOfElements, pos2); 
-    disp(arr, numOfElements); cout << '\n'; 
+    // Sort if required
+    if (!isSorted(arr, numOfElements))
+    {
+        cout << "Array not sorted. Applying Bubble Sort...\n";
+        buSort(arr, numOfElements);
 
-    cout << endl; 
-
-
-    // check sorted, if not sort
-    cout << "checking if arr is sorted! "<< '\n'; 
-    if (isSorted(arr, numOfElements)){
-        cout << "already sorted! skippig bubble sort" << '\n';
+        cout << "Sorted Array:\n";
+        disp(arr, numOfElements);
+        cout << "\n\n";
     }
-    else{
-        cout << "not sorted. applying bubble sort " << '\n'; 
-        bubbleSort(arr, numOfElements);
-        cout << "after sorting: " << '\n'; 
-        disp(arr, numOfElements); cout << '\n'; 
+    else
+    {
+        cout << "Array already sorted.\n\n";
     }
 
-    cout << endl; 
+    // Insert element
+    cout << "Inserting " << item << " at index " << insertPos << '\n';
+    insert(arr, numOfElements, insertPos, item);
 
-    // linear search
-    cout << "Searching for  " << key1 << "  in arr" << '\n'; 
-    if (linearSearch(arr, numOfElements, key1)){
-        cout << "exists! " << '\n'; 
-    }
-    else{
-        cout << "does not exist in arr " << '\n';
-    }
+    // Keep array sorted
+    buSort(arr, numOfElements);
 
-    cout << endl; 
+    disp(arr, numOfElements);
+    cout << "\n\n";
 
-    // binary search 
-    cout << "Searching for  " << key2 << "  in arr" << '\n'; 
-    if (binarySearch(arr, numOfElements, key2)){
-        cout << "exists! " << '\n'; 
-    }
-    else{
-        cout << "does not exist in arr " << '\n';
-    }
+    // Delete element
+    cout << "Deleting element at index " << deletePos << '\n';
+    del(arr, numOfElements, deletePos);
 
-    cout << endl; 
+    // Keep array sorted
+    buSort(arr, numOfElements);
 
-    return 0; 
+    disp(arr, numOfElements);
+    cout << "\n\n";
 
+    // Linear Search
+    int index = LSearch(arr, numOfElements, linearKey);
 
+    if (index == -1)
+        cout << linearKey << " not found.\n";
+    else
+        cout << linearKey << " found at index " << index << '\n';
+
+    // Binary Search
+    index = biSearch(arr, numOfElements, binaryKey);
+
+    if (index == -1)
+        cout << binaryKey << " not found.\n";
+    else
+        cout << binaryKey << " found at index " << index << '\n';
+
+    return 0;
 }
 
+// Display array
+void disp(int arr[], int numOfElements)
+{
+    cout << "[ ";
 
-void disp(int arr[],  int numOfElements){
-    for (int k=0; k<numOfElements; k++){
-        cout << arr[k] << '\t';
-    }
+    for (int i = 0; i < numOfElements; i++)
+        cout << arr[i] << " ";
+
+    cout << "]";
 }
 
-void insert(int arr[],  int &numOfElements, int pos1, int item){
-    for (int k = numOfElements; k>pos1; k--){
-        arr[k] = arr[k-1]; 
-    }
-    arr[pos1] = item; 
-    numOfElements ++; 
+// Insert element
+void insert(int arr[], int &numOfElements, int pos, int item)
+{
+    for (int i = numOfElements; i > pos; i--)
+        arr[i] = arr[i - 1];
+
+    arr[pos] = item;
+    numOfElements++;
 }
 
+// Delete element
+void del(int arr[], int &numOfElements, int pos)
+{
+    for (int i = pos; i < numOfElements - 1; i++)
+        arr[i] = arr[i + 1];
 
-void del(int arr[],  int &numOfElements, int pos2){
-    for (int k=pos2; k<numOfElements-1; k++){
-        arr[k] = arr[k+1];
-    }
-    numOfElements--; 
+    numOfElements--;
 }
 
-void bubbleSort(int arr[],  int numOfElements){
-    for (int k=0; k<numOfElements-1; k++){
-        for (int j=0; j<numOfElements-1-k; j++){
-            if (arr[j] > arr[j+1]){
+// Bubble Sort
+void buSort(int arr[], int numOfElements)
+{
+    for (int i = 0; i < numOfElements - 1; i++)
+    {
+        for (int j = 0; j < numOfElements - 1 - i; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
                 int temp = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = temp; 
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
             }
         }
     }
 }
 
-
-bool linearSearch(int arr[],  int numOfElements, int key1){
-    for (int k=0; k<numOfElements; k++){
-        if (arr[k] == key1){
-            return true; 
-        }
+// Linear Search
+int LSearch(int arr[], int numOfElements, int key)
+{
+    for (int i = 0; i < numOfElements; i++)
+    {
+        if (arr[i] == key)
+            return i;
     }
 
-    return false; 
+    return -1;
 }
-bool binarySearch(int arr[],  int numOfElements, int key2){
-    int low =0;
-    int high = numOfElements-1;
 
-    while (low<=high){
-       int mid = (low+high)/2;
+// Binary Search
+int biSearch(int arr[], int numOfElements, int key)
+{
+    int low = 0;
+    int high = numOfElements - 1;
 
-       if (key2 == arr[mid]){
-            return true; 
-       }
-       else if (key2 < arr[mid]){
-        high = mid-1; 
-       }
-       else{
-        low = mid+1; 
-       }
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+
+        if (arr[mid] == key)
+            return mid;
+
+        if (key < arr[mid])
+            high = mid - 1;
+        else
+            low = mid + 1;
     }
 
-    return false; 
+    return -1;
 }
 
-
-bool isSorted(int arr[], int numOfElements){
-    for (int k=0; k<numOfElements-1; k++){
-        if (arr[k] > arr[k+1]){
-            return false; 
-        }
+// Check if sorted
+bool isSorted(int arr[], int numOfElements)
+{
+    for (int i = 0; i < numOfElements - 1; i++)
+    {
+        if (arr[i] > arr[i + 1])
+            return false;
     }
-    return true; 
-}
 
+    return true;
+}
