@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 
+<<<<<<< HEAD
 const int MAX = 10;
 
 struct Stack{
@@ -129,3 +130,6 @@ int main() {
 
     return 0;
 }
+=======
+void 
+>>>>>>> 95cae2c (removed files)
