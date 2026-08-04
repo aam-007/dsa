@@ -1,28 +1,34 @@
 #include <iostream>
 
 namespace Mat{
-    constexpr int ROWS = 3;
-    constexpr int COLS = 3;
+    template <typename T, std::size_t ROWS, std::size_t COLS>
 
     struct Matrix{
-        int arr[ROWS][COLS] {};
+        T arr [ROWS][COLS]{};
     };
 
-    void disp(const Matrix &m){
-        for (int i=0; i<ROWS; ++i){
-            for (int k=0; k<COLS; ++k){
-                std :: cout << m.arr[i][k] << " ";
+    template <typename T, std::size_t ROWS, std::size_t COLS>
+    void disp(const Matrix <T, ROWS, COLS > &m){
+        for (std::size_t i = 0; i < ROWS; ++i)
+        {
+            for (std::size_t j = 0; j < COLS; ++j)
+            {
+                std::cout << m.arr[i][j] << ' ';
             }
-            std :: cout << '\n' ;
+
+            std::cout << '\n';
+
         }
     }
 
 }
 
-int main(){
-    Mat :: Matrix matrix {}; 
-    std :: cout << "Zero initialized matrix: " << '\n';
-    Mat :: disp(matrix); 
+int main()
+{
+    Mat::Matrix<int, 3, 3> matrix{};
 
-    return 0; 
+    std::cout << "Matrix:\n";
+    Mat::disp(matrix);
+
+    return 0;
 }
