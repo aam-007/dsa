@@ -1,13 +1,13 @@
 #include <iostream>
 
 namespace Mat{
-    template <typename T, T ROWS, T COLS>
+    template <typename T, std::size_t ROWS, std::size_t COLS>
     struct Matrix{
         T arr[ROWS][COLS]{}; 
     };
 
-    template <typename T, T ROWS, T COLS>
-    void linearSearch(const Matrix<T, ROWS, COLS> &m, int key){
+    template <typename T, std::size_t ROWS, std::size_t COLS>
+    void linearSearch(const Matrix<T, ROWS, COLS> &m, T key){
         for (std::size_t i{0}; i<ROWS; ++i ){
             for (std::size_t j{0}; j<COLS; ++j){
                 if (key == m.arr[i][j]){
@@ -15,8 +15,6 @@ namespace Mat{
                     
                 }
             }
-
-            std::cout << '\n'; 
         }
     }
 }
