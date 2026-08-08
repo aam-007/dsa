@@ -1,67 +1,67 @@
 #include <iostream>
 
-// nlds ==> non-linear data struct
-namespace nlds{
-    constexpr int MAX{10};
+// Linear Data Structures
+namespace lds {
 
-    struct Stack{
-        int arr[MAX];
-        int top{-1};
-    };
+constexpr int MAX{10};
 
-    bool isOverflow(const Stack &s){
-        return (s.top == MAX-1);
+struct Stack {
+    int arr[MAX];
+    int top{-1};
+};
+
+bool isOverflow(const Stack &s) {
+    return (s.top == MAX - 1);
+}
+
+bool isUnderflow(const Stack &s) {
+    return (s.top == -1);
+}
+
+void display(const Stack &s) {
+    if (isUnderflow(s)) {
+        std::cout << "Underflow (Stack empty)!\n";
+        return;
     }
 
-    bool isUnderflow(const Stack &s){
-        return (s.top==-1);
-    }
-
-    void display(const Stack &s){
-        if (isUnderflow(s)){
-            std::cout << "Underflow (Stack empty)!" << '\n';
-            return;
-        }
-
-        for (int k{s.top}; k>=0; --k){
-            std::cout << s.arr[k] << '\n';
-        }
-    }
-
-    void push(Stack &s, int item){
-        if (isOverflow(s)){
-            std::cout << "Overflow! stack full!!!" << '\n';
-            return;
-        }
-
-        ++s.top;
-        s.arr[s.top]=item;
-
-    }
-
-    int pop (Stack &s){
-        if (isUnderflow(s)){
-            std::cout << "Underflow! Stack empty!!!" << '\n';
-            return -1;
-        }
-
-        int popped = s.arr[s.top];
-        --s.top;
-        return popped;
-    }
-
-    int peek(const Stack &s){
-        if (isUnderflow(s)){
-            std::cout << "Underflow! Stack empty!!" << '\n';
-            return -1;
-        }
-
-        return s.arr[s.top];
+    std::cout << "Stack elements (Top to Bottom):\n";
+    for (int k = s.top; k >= 0; --k) {
+        std::cout << s.arr[k] << '\n';
     }
 }
 
+void push(Stack &s, int item) {
+    if (isOverflow(s)) {
+        std::cout << "Overflow! Stack is full!\n";
+        return;
+    }
+
+    s.arr[++s.top] = item;
+    std::cout << item << " pushed into stack.\n";
+}
+
+int pop(Stack &s) {
+    if (isUnderflow(s)) {
+        std::cout << "Underflow! Stack is empty!\n";
+        return -1;
+    }
+
+    return s.arr[s.top--];
+}
+
+int peek(const Stack &s) {
+    if (isUnderflow(s)) {
+        std::cout << "Underflow! Stack is empty!\n";
+        return -1;
+    }
+
+    return s.arr[s.top];
+}
+
+} // namespace lds
+
 int main() {
-    nlds::Stack s{};
+    lds::Stack s{};
     int choice;
     int item;
 
@@ -79,24 +79,23 @@ int main() {
             case 1:
                 std::cout << "Enter item: ";
                 std::cin >> item;
-                nlds::push(s, item);
+                lds::push(s, item);
                 break;
 
             case 2:
-                item = nlds::pop(s);
+                item = lds::pop(s);
                 if (item != -1)
                     std::cout << "Popped: " << item << '\n';
                 break;
 
             case 3:
-                item = nlds::peek(s);
+                item = lds::peek(s);
                 if (item != -1)
                     std::cout << "Top element: " << item << '\n';
                 break;
 
             case 4:
-                std::cout << "Stack:\n";
-                nlds::display(s);
+                lds::display(s);
                 break;
 
             case 5:
@@ -107,4 +106,6 @@ int main() {
                 std::cout << "Invalid choice!\n";
         }
     }
+
+    return 0;
 }
