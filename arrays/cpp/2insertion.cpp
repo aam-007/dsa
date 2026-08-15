@@ -17,6 +17,8 @@ void insert(int arr[], int &numOfElements, int pos, int item){
         arr[k] = arr[k-1]; 
     }
 
+    arr[pos] = item; 
+
     numOfElements++;
 }
 
