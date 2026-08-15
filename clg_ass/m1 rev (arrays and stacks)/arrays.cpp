@@ -45,6 +45,39 @@ namespace lds {
 		return false; 
 	}
 
+	void bubbleSort(std::size_t arr[], std::size_t ub) {
+		for (std::size_t k{ 0 }; k < ub - 1; ++k) {
+			for (std::size_t j{ 0 }; j < ub - 1 - k; ++j) {
+				if (arr[j] > arr[j + 1]) {
+					std::swap(arr[j], arr[j + 1]); 
+				}
+			}
+		}
+	}
+
+	bool binarySearch(const std::size_t arr[], std::size_t ub, int key2) {
+		int low = 0;
+		int high = ub-1;
+
+		while (low <= high) {
+			int mid = (low + high) / 2;
+			if (arr[mid] == key2) {
+				return true; 
+			}
+
+			else if (arr[mid] > key2) {
+				high = mid - 1; 
+			}
+
+			else {
+				low = mid + 1; 
+			}
+		}
+
+		return false; 
+
+	}
+
 }
 
 int main() {
@@ -56,6 +89,7 @@ int main() {
 	std::size_t pos1{ 4 }; 
 	std::size_t pos2{ 2 }; 
 	int key{ 10 };
+	int key2{ 9 }; 
 	
 	
 	lds::traversal(arr, lb, ub); 
@@ -71,6 +105,17 @@ int main() {
 	else {
 		std::cout << key <<" not present"; 
 	}
+
+	lds::bubbleSort(arr, ub);
+	lds::traversal(arr, lb, ub); std::cout << '\n'; 
+
+	if (lds::binarySearch(arr, ub, key2)) {
+		std::cout << "found!" << '\n';
+	}
+	else {
+		std::cout << "not found" << '\n';
+	}
+	
 
 	return 0; 
 }
