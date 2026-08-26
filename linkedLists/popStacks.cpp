@@ -27,6 +27,7 @@ void pop(Node*& top) {
     }
 
     Node* temp = top;
+    cout << temp->data << '\n'; 
 
     top = top->next;
 
